@@ -2,6 +2,10 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
+# CREDITS:
+# following through this: https://www.kdnuggets.com/fastapi-tutorial-build-apis-with-python-in-minutes
+# for the POST behavior
+
 # Define a function to return a description of the app
 def get_app_description():
 	return (
