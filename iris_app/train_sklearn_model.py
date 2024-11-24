@@ -1,11 +1,11 @@
-#https://medium.com/analytics-vidhya/serve-a-machine-learning-model-using-sklearn-fastapi-and-docker-85aabf96729b
-
 from joblib import dump
+from pathlib import Path
 from sklearn import datasets
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.tree import DecisionTreeClassifier
 
+MODEL_DIR = "./models"
 
 iris = datasets.load_iris(return_X_y=True)
 
@@ -19,4 +19,8 @@ pipeline = Pipeline(clf_pipeline)
 
 pipeline.fit(X, y)
 
-dump(pipeline, './test_fastapi/ml/iris_dt_v1.joblib')
+# model save
+p = Path(MODEL_DIR)
+p.mkdir(parents=True, exist_ok=True)
+
+dump(pipeline, f"{MODEL_DIR}/iris_decision-tree_v1.joblib")
