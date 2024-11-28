@@ -31,10 +31,10 @@ def main():
   "petal_width": 0.2
 }""", language="json")
     
-    user_sepal_length = st.number_input("Sepal length", value=None, placeholder="Insert value")
-    user_sepal_width = st.number_input("Sepal width", value=None, placeholder="Insert value")
-    user_petal_length = st.number_input("Petal length", value=None, placeholder="Insert value")
-    user_petal_width = st.number_input("Petal width", value=None, placeholder="Insert value")
+    user_sepal_length = st.number_input("Sepal length", value=None, placeholder="Insert value", value=5.1)
+    user_sepal_width = st.number_input("Sepal width", value=None, placeholder="Insert value", value=3.5)
+    user_petal_length = st.number_input("Petal length", value=None, placeholder="Insert value", value=1.4)
+    user_petal_width = st.number_input("Petal width", value=None, placeholder="Insert value", value=0.2)
 
     if st.button("Send request to model"):
         # TODO: validate that there are no None values
