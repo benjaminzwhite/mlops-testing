@@ -15,6 +15,23 @@ TODO: put companies/tutorials/videos here
 
 ## Contents
 
+### `iris_app`
+
+Working version of a separate API code file and a Streamlit interface that sends requests to API.
+
+First, you can retrain the model using the train script which will save it to a `models` dir.
+
+Then launch the API server script `uvicorn api_iris_predict:app --reload`, you can test by navigating to the local host root (there should be a welcome message explaining how to use the `predict` endpoint).
+
+Then finally launch the Streamlit app with `streamlit run iris_streamlit_app.py`
+
+### TODO
+
+- learn best practice for loading model within the API (I have read there's an `app.on_load` kind of approach, but didn't seem to work locally)
+- learn best practice for dirs/model zoo/config files for endpoints etc.
+
+---
+
 ### `test_fastapi`
 
 Experiments with FastAPI.
