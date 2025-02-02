@@ -1,3 +1,4 @@
 lightgbm
 pydantic
 fastapi==0.115.5
+uvicorn
