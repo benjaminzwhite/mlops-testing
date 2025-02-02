@@ -10,7 +10,7 @@ import pandas as pd
 # used during testing/dev - can toggle to access the API locally, or toggle to deployed/hosted version
 URL_MAPPER = {
     "local":"http://127.0.0.1:8000/predict/",
-    "hosted":"TODO",
+    "hosted":"https://credit-prediction-demo.onrender.com/predict/",
 }
 api_version = "local"
 
@@ -45,7 +45,7 @@ def main():
         if st.button("Faire requete API pour client"):
             user_request = {"client_id": id_client_choix}
 
-            with st.spinner("Sending request..."):
+            with st.spinner("Sending request to API at:", URL_MAPPER[api_version]):
                 r = requests.post(URL_MAPPER[api_version],
                                 json=user_request)
                 
