@@ -4,3 +4,4 @@ fastapi==0.115.5
 uvicorn
 joblib
 pandas
+scikit-learn==1.5.2
