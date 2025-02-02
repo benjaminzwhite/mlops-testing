@@ -2,3 +2,8 @@ lightgbm
 pydantic
 fastapi==0.115.5
 uvicorn
+joblib
+pickle
+pandas
+contextlib
+typing
