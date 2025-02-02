@@ -45,7 +45,7 @@ def main():
         if st.button("Faire requete API pour client"):
             user_request = {"client_id": id_client_choix}
 
-            with st.spinner("Sending request to API at:", URL_MAPPER[api_version]):
+            with st.spinner(f"Sending request to API at: {URL_MAPPER[api_version]}"):
                 r = requests.post(URL_MAPPER[api_version],
                                 json=user_request)
                 
