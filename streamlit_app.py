@@ -12,7 +12,7 @@ URL_MAPPER = {
     "local":"http://127.0.0.1:8000/predict/",
     "hosted":"https://credit-prediction-demo.onrender.com/predict/",
 }
-api_version = "local"
+api_version = "hosted" # toggle
 
 # ===
 # load "client database"
