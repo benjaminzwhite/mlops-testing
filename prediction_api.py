@@ -15,10 +15,11 @@ from contextlib import asynccontextmanager
 from pydantic import BaseModel
 from typing import Literal
 
-MODEL_PATH = "models\pret-a-depenser\prod-lgbm.pkl"
+#MODEL_PATH = "models\pret-a-depenser\prod-lgbm.pkl"
+LINUX_MODEL_PATH = "models/pret-a-depenser/prod-lgbm.pkl"
 
 # load model
-with open(MODEL_PATH, "rb") as fo:
+with open(LINUX_MODEL_PATH, "rb") as fo:
     model = pickle.load(fo)
 
 # load "client database"
