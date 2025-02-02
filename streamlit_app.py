@@ -41,11 +41,12 @@ def main():
         st.write("DEMO: M. Jean DUPONT - photo - integration CRM banque, etc.")
 
     with st.container(border=True):
-        st.subheader("Requete vers endpoint prediction API")    
+        st.subheader("Requete vers endpoint prediction API")  
+        st.write(f"Prediction API utilise : {URL_MAPPER[api_version]}")
         if st.button("Faire requete API pour client"):
             user_request = {"client_id": id_client_choix}
 
-            with st.spinner(f"Sending request to API at: {URL_MAPPER[api_version]}"):
+            with st.spinner(f"Sending request to API"):
                 r = requests.post(URL_MAPPER[api_version],
                                 json=user_request)
                 
