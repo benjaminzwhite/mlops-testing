@@ -3,6 +3,7 @@ This is the Streamlit app for "Pret-A-Depenser" OC P7
 
 Access a predict endpoint from our prod model
 """
+import json
 import requests
 import streamlit as st
 import pandas as pd
@@ -56,7 +57,9 @@ def main():
                 st.subheader("Prediction du modele")
                 st.json(r.text)
                 st.write("Avec ce modele, le seuil de prediction est de :", 0.09)
-                client_prob_rembourse = r["predicted_prob_remboursement"]
+                # load la response
+                r_dict = json.loads(r.text)
+                client_prob_rembourse = r_dict["predicted_prob_remboursement"]
                 if client_prob_rembourse >= 0.09:
                     st.markdown(":green[Pret accorde !]")
                 else:
