@@ -55,6 +55,16 @@ def main():
             with st.container(border=True):
                 st.subheader("Prediction du modele")
                 st.json(r.text)
+                st.write("Avec ce modele, le seuil de prediction est de :", 0.09)
+                client_prob_rembourse = r["predicted_prob_remboursement"]
+                if client_prob_rembourse >= 0.09:
+                    st.markdown(":green[Pret accorde !]")
+                else:
+                    st.markdown(":red[Pret non accorde.]")
+                
+                st.subheader("Explication prediction pour ce client")
+                st.write("TODO - demo en cours pour p8")
+                st.image("shap_pour_client_individuel.png")
 
 
 if __name__ == "__main__":
