@@ -1,4 +1,5 @@
 import pytest
+import requests
 
 # Basic dummy test to make sure defining functions works OK
 def my_add(x, y):
@@ -41,3 +42,14 @@ def test_logistic_regression():
     sample = X[0].reshape(1,-1)
     sample_pred = model.predict(sample)
     assert sample_pred in [0,1,2] # class labels are 0,1,2
+
+def test_connect_to_api():
+    """
+    Test API is up and running
+    """
+    api_address = "https://credit-prediction-demo.onrender.com/predict/"
+    user_request = {"client_id": 100079} # a client from CSV
+    
+    r = requests.post(api_address, json=user_request)
+    
+    assert r.status_code == 200
