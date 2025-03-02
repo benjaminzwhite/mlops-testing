@@ -13,7 +13,8 @@ import numpy as np
 import streamlit.components.v1 as components # tentative debug streamlit SHAP plots
 import plotly.graph_objects as go
 
-shap.initjs() #?!??!?!?!? erreurs parfois lors du chargement des plots SHAP dans Streamlit
+# UPDATE - if you include this it causes Streamlit deployed app to bug O_o
+#shap.initjs() #?!??!?!?!? erreurs parfois lors du chargement des plots SHAP dans Streamlit
 
 # used during testing/dev - can toggle to access the API locally, or toggle to deployed/hosted version
 URL_MAPPER = {
