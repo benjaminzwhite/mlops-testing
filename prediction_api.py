@@ -10,16 +10,19 @@ import pandas as pd
 
 import lightgbm
 
+import shap # added for p8
+
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from pydantic import BaseModel
 from typing import Literal
 
 #MODEL_PATH = "models\pret-a-depenser\prod-lgbm.pkl"
-LINUX_MODEL_PATH = "models/pret-a-depenser/prod-lgbm.pkl"
+# LINUX MODEL PATH FOR DEPLOYMENT
+MODEL_PATH = "models/pret-a-depenser/prod-lgbm.pkl"
 
 # load model
-with open(LINUX_MODEL_PATH, "rb") as fo:
+with open(MODEL_PATH, "rb") as fo:
     model = pickle.load(fo)
 
 # load "client database"
@@ -32,6 +35,10 @@ client_database = client_database.set_index("SK_ID_CURR") # on utilisera ceci po
 # -> can imagine scaling this up etc. for now we just use the client_id in our "database"
 class ClientDetails(BaseModel):
 	client_id: int
+
+# --- p8 ---
+# load SHAP explainer
+explainer = shap.TreeExplainer(model)
 
 # --- SETUP ---
 app = FastAPI(title="API Pret-A-Depenser", description="API pour classifier des clients de banque et decider de leur accorder ou non un pret. Using a Light GBM model to make predictions.", version="1.0")
@@ -62,3 +69,35 @@ async def prediction_non_remboursement(client_details: ClientDetails):
 
     return {"predicted_prob_remboursement": prob_remboursement,
             "predicted_prob_non_remboursement": prob_non_remboursement}
+
+
+# --- p8 : add SHAP ---
+@app.post("/predict_with_shap/")
+async def prediction_with_shap(client_details: ClientDetails):
+	# lookup this ID in our "database" indexed by sk_id_curr
+    client_sk_id_curr = client_details.client_id
+    
+    client_info = client_database.loc[[int(client_sk_id_curr)]]
+    
+    prediction = model.predict_proba(client_info)[0]
+
+    # SHAP stuff
+    shap_values = explainer.shap_values(client_info)
+
+    # UPDATE: modif for binary classification
+    if isinstance(shap_values, list):
+          shap_values = shap_values[1] # CLASS LABEL 1
+        
+    # numpy to list
+    shap_values_l = shap_values[0].tolist()
+    expected_val = float(explainer.expected_value[1] if isinstance(explainer.expected_value,list) else explainer.expected_value)
+
+    # return from API
+    res = {
+          "prediction": prediction.tolist(),
+          "shap_values": shap_values_l,
+          "expected_val": expected_val,
+          "feature_columns": client_info.columns.tolist(),
+    }
+
+    return res
